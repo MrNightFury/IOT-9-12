@@ -38,7 +38,7 @@ export class Publisher {
             }).then(res => {
                 return res;
             })
-            
+
             if (client != null) {
                 this.connections.set(topic.name, {
                     topic: topic,
@@ -49,7 +49,7 @@ export class Publisher {
     }
 
     publish(name: string, message: string) {
-        let con = this.connections.get("name");
+        let con = this.connections.get(name);
         let messageToSend = `{${con?.topic.key}: ${message}}`;
         console.log(`Publishing to ${con?.topic.name}(${con?.topic.user}): ${messageToSend}`);
         con?.client.publish("v1/devices/me/telemetry", messageToSend);
