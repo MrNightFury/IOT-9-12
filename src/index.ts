@@ -3,13 +3,22 @@ import { subscribe } from "./subscribe.js";
 import { MositTopic, Publisher } from "./publish.js";
 import { Config } from "./Config.js";
 
-function getPubTopic(subTopic: string) {
+// function getPubTopicName(subTopic: string) {
+//     for (let i in subTopics) {
+//         if (subTopics[i].getPath() == subTopic) {
+//             return pubTopics[i].name;
+//         }
+//     }
+//     return "";
+// }
+
+function getPubTopic(subTopic: string) : MositTopic | any {
     for (let i in subTopics) {
         if (subTopics[i].getPath() == subTopic) {
-            return pubTopics[i].name;
+            return pubTopics[i];
         }
     }
-    return "";
+    return {}
 }
 
 let subTopics: Topic[] = [
@@ -30,7 +39,9 @@ let config = { // Вписать чемодан
 
 let publisher: Publisher = new Publisher("mqtt://thingsboard.mosit");
 publisher.setup(pubTopics);
+
 subscribe(config, subTopics, (topic: string, message: string) => {
-    console.log(`${topic}: ${message}`)
-    publisher.publish(getPubTopic(topic), message);
+    console.log(`Recieved ${topic}: ${message}`);
+    console.log(`Publishing ${getPubTopic(topic).name}: ${message}`);
+    // publisher.publish(getPubTopic(topic).name, message);
 })
