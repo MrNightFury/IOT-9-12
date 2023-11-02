@@ -1,16 +1,5 @@
 import * as mqtt from "mqtt";
-
-export class MositTopic {
-    user: string;
-    key: string;
-    name: string;
-
-    constructor(name: string, user: string, key: string) {
-        this.key = key;
-        this.user = user;
-        this.name = name;
-    }
-}
+import { MositTopic } from "./ReSend.js";
 
 export interface Pub {
     client: mqtt.MqttClient,

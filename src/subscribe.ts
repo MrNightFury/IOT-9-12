@@ -1,8 +1,6 @@
 import * as mqtt from "mqtt";
 import fs from "fs";
-
-import { Topic } from "./Topic";
-import { Config } from "./Config";
+import { Topic } from "./ReSend.js";
 
 export async function subscribe(cfg: any, topics: Topic[], callback: any) {    
     let client = await mqtt.connectAsync({

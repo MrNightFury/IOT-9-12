@@ -1,36 +1,28 @@
-import { Topic } from "./Topic.js";
 import { subscribe } from "./subscribe.js";
-import { MositTopic, Publisher } from "./publish.js";
-import { Config } from "./Config.js";
-
-// function getPubTopicName(subTopic: string) {
-//     for (let i in subTopics) {
-//         if (subTopics[i].getPath() == subTopic) {
-//             return pubTopics[i].name;
-//         }
-//     }
-//     return "";
-// }
+import { Publisher } from "./publish.js";
+import { Resend } from "./ReSend.js";
+import { MositTopic, Topic } from "./ReSend.js";
 
 function getPubTopic(subTopic: string) : MositTopic | any {
-    for (let i in subTopics) {
-        if (subTopics[i].getPath() == subTopic) {
-            return pubTopics[i];
+    for (let i in resend) {
+        if (resend[i].from.getPath() == subTopic) {
+            return resend[i].to;
         }
     }
     return {}
 }
 
-let subTopics: Topic[] = [
-    new Topic("wb-msw-v3_21", "Sound Level"),
-    new Topic("wb-ms_11", "Illuminance"),
-    new Topic("wb-adc", "Vin")
-]
-
-let pubTopics: MositTopic[] = [
-    new MositTopic("sound", "nhmy5k7zusy872wa3rq1", "sound_level"),
-    new MositTopic("light", "", "illuminance"),
-    new MositTopic("voltage", "", "Vin")
+let resend: Resend[] = [
+    {
+        from: new Topic("wb-msw-v3_21", "Sound Level"),
+        to: new MositTopic("sound", "nhmy5k7zusy872wa3rq1", "sound_level")
+    }, {
+        from: new Topic("wb-ms_11", "Illuminance"),
+        to: new MositTopic("light", "", "illuminance")
+    }, {
+        from: new Topic("wb-adc", "Vin"),
+        to: new MositTopic("voltage", "", "Vin")
+    }
 ]
 
 let config = { // Вписать чемодан
@@ -39,10 +31,10 @@ let config = { // Вписать чемодан
 
 console.log("Connecting...");
 let publisher: Publisher = new Publisher("thingsboard.mosit");
-await publisher.setup(pubTopics);
+await publisher.setup(resend.map(item => item.to));
 
 console.log("Subscribing...");
-subscribe(config, subTopics, (topic: string, message: string) => {
+subscribe(config, resend.map(item => item.from), (topic: string, message: string) => {
     console.log(`Recieved ${topic}: ${message}`);
     publisher.publish(getPubTopic(topic).name, message);
 })
