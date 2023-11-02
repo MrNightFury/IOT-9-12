@@ -5,7 +5,7 @@ import { Topic } from "./Topic";
 import { Config } from "./Config";
 
 export function subscribe(cfg: any, topics: Topic[], callback: any) {
-    let client = mqtt.connect(cfg.host);
+    let client = mqtt.connect(cfg.host, { protocol: "mqtt"});
 
     var isConnected = false;
     client.on('connect', () => {
