@@ -37,9 +37,11 @@ let config = { // Вписать чемодан
     host: "mqtt://192.168.1.12",
 }
 
+console.log("Connecting...");
 let publisher: Publisher = new Publisher("thingsboard.mosit");
 publisher.setup(pubTopics);
 
+console.log("Subscribing...");
 subscribe(config, subTopics, (topic: string, message: string) => {
     console.log(`Recieved ${topic}: ${message}`);
     publisher.publish(getPubTopic(topic).name, message);

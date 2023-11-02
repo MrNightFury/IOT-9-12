@@ -38,6 +38,7 @@ export class Publisher {
             }).then(res => {
                 return res;
             })
+            
             if (client != null) {
                 this.connections.set(topic.name, {
                     topic: topic,
