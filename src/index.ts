@@ -39,7 +39,7 @@ let config = { // Вписать чемодан
 
 console.log("Connecting...");
 let publisher: Publisher = new Publisher("thingsboard.mosit");
-publisher.setup(pubTopics);
+await publisher.setup(pubTopics);
 
 console.log("Subscribing...");
 subscribe(config, subTopics, (topic: string, message: string) => {
