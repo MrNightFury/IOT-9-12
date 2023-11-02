@@ -31,5 +31,6 @@ let config = { // Вписать чемодан
 let publisher: Publisher = new Publisher("mqtt://thingsboard.mosit");
 publisher.setup(pubTopics);
 subscribe(config, subTopics, (topic: string, message: string) => {
+    console.log(`${topic}: ${message}`)
     publisher.publish(getPubTopic(topic), message);
 })
