@@ -30,7 +30,7 @@ export class Publisher {
         for (let topic of topics) {
             let client = await mqtt.connectAsync({
                 host: this.host,
-                port: 8080,
+                port: 1883,
                 username: topic.user,
                 protocol: "mqtt"
             }).catch(err => {

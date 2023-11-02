@@ -37,7 +37,7 @@ let config = { // Вписать чемодан
     host: "mqtt://192.168.1.12",
 }
 
-let publisher: Publisher = new Publisher("mqtt://thingsboard.mosit");
+let publisher: Publisher = new Publisher("thingsboard.mosit");
 publisher.setup(pubTopics);
 
 subscribe(config, subTopics, (topic: string, message: string) => {
