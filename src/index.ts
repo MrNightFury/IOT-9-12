@@ -28,9 +28,9 @@ let subTopics: Topic[] = [
 ]
 
 let pubTopics: MositTopic[] = [
-    new MositTopic("sound", "361t6260tz7cz53tuuty", "sound_level"),
-    new MositTopic("light", "e50mm12cdx3khsqlgw2k", "illuminance"),
-    new MositTopic("voltage", "9g5cl4vly4xnug7ca71g", "Vin")
+    new MositTopic("sound", "nhmy5k7zusy872wa3rq1", "sound_level"),
+    new MositTopic("light", "", "illuminance"),
+    new MositTopic("voltage", "", "Vin")
 ]
 
 let config = { // Вписать чемодан
