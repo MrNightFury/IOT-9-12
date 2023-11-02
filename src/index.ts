@@ -28,9 +28,9 @@ let subTopics: Topic[] = [
 ]
 
 let pubTopics: MositTopic[] = [
-    new MositTopic("sound", "i6mqx3aosr8ymnuuop0y", "level"),
-    new MositTopic("light", "7giwj93c9wyn78faulup", "level"),
-    new MositTopic("voltage", "hr8sfqirza2sb1i4l9qd", "level")
+    new MositTopic("sound", "361t6260tz7cz53tuuty", "level"),
+    new MositTopic("light", "e50mm12cdx3khsqlgw2k", "level"),
+    new MositTopic("voltage", "9g5cl4vly4xnug7ca71g", "level")
 ]
 
 let config = { // Вписать чемодан
@@ -42,6 +42,6 @@ publisher.setup(pubTopics);
 
 subscribe(config, subTopics, (topic: string, message: string) => {
     console.log(`Recieved ${topic}: ${message}`);
-    console.log(`Publishing ${getPubTopic(topic).name}: ${message}`);
-    // publisher.publish(getPubTopic(topic).name, message);
+    console.log(`Publishing ${getPubTopic(topic).name}(${getPubTopic(topic).user}): ${message}`);
+    publisher.publish(getPubTopic(topic).name, message);
 })
