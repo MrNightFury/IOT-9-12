@@ -12,27 +12,39 @@ export class MositTopic {
     }
 }
 
+export interface Pub {
+    client: mqtt.MqttClient,
+    topic: MositTopic
+}
+
 export class Publisher {
     host: string;
-    connections: Map<string, mqtt.MqttClient> = new Map();
-    keys: Map<string, string> = new Map();
+    // connections: Map<string, mqtt.MqttClient> = new Map();
+    connections: Map<string, Pub> = new Map();
 
     constructor(host: string) {
         this.host = host;
     }
 
-    setup(topics: MositTopic[]) {
+    async setup(topics: MositTopic[]) {
         for (let topic of topics) {
-            this.connections.set(topic.name, mqtt.connect({
-                hostname: this.host,
-                username: topic.user,
-                protocol: "mqtt"
-            }));
-            this.keys.set(topic.name, topic.key);
+            this.connections.set(topic.name, {
+                topic: topic,
+                client: await mqtt.connectAsync({
+                    host: this.host,
+                    port: 1883,
+                    username: topic.user,
+                    protocol: "mqtt"
+                })
+            });
+
         }
     }
 
     publish(name: string, message: string) {
-        this.connections.get(name)?.publish("v1/devices/me/telemetry", `${this.keys.get(name)}:${message}`);
+        let con = this.connections.get("name");
+        let messageToSend = `{${con?.topic.key}: ${message}}`;
+        console.log(`Publishing to ${con?.topic.name}(${con?.topic.user}): ${messageToSend}`);
+        con?.client.publish("v1/devices/me/telemetry", messageToSend);
     }
 }
