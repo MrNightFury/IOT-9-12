@@ -25,7 +25,8 @@ export class Publisher {
         for (let topic of topics) {
             this.connections.set(topic.name, mqtt.connect({
                 hostname: this.host,
-                username: topic.user
+                username: topic.user,
+                protocol: "mqtt"
             }));
             this.keys.set(topic.name, topic.key);
         }
