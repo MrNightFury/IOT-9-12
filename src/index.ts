@@ -34,7 +34,7 @@ let pubTopics: MositTopic[] = [
 ]
 
 let config = { // Вписать чемодан
-    host: "mqtt://192.168.1.12",
+    host: "192.168.1.12",
 }
 
 console.log("Connecting...");
