@@ -25,10 +25,10 @@ let pubTopics: MositTopic[] = [
 ]
 
 let config = { // Вписать чемодан
-    host: "192.168.1.13",
+    host: "mqtt://192.168.1.13",
 }
 
-let publisher: Publisher = new Publisher("thingsboard.mosit");
+let publisher: Publisher = new Publisher("mqtt://thingsboard.mosit");
 publisher.setup(pubTopics);
 subscribe(config, subTopics, (topic: string, message: string) => {
     publisher.publish(getPubTopic(topic), message);
