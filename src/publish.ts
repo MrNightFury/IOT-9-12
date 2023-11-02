@@ -28,16 +28,22 @@ export class Publisher {
 
     async setup(topics: MositTopic[]) {
         for (let topic of topics) {
-            this.connections.set(topic.name, {
-                topic: topic,
-                client: await mqtt.connectAsync({
-                    host: this.host,
-                    port: 1883,
-                    username: topic.user,
-                    protocol: "mqtt"
-                })
-            });
-
+            let client = await mqtt.connectAsync({
+                host: this.host,
+                port: 1883,
+                username: topic.user,
+                protocol: "mqtt"
+            }).catch(err => {
+                console.log("!!!" + err + "!!!");
+            }).then(res => {
+                return res;
+            })
+            if (client != null) {
+                this.connections.set(topic.name, {
+                    topic: topic,
+                    client: client
+                });
+            }
         }
     }
 
