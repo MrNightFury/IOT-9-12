@@ -10,7 +10,7 @@ export function subscribe(cfg: any, topics: Topic[], callback: any) {
     var isConnected = false;
     client.on('connect', () => {
         for (let topic of topics) {
-            client.subscribe(cfg.username + topic.getPath(), err => {
+            client.subscribe(topic.getPath(), err => {
                 if (!err) {
                     isConnected = true;
                     console.log("Subscribed to " + topic.getPath());
