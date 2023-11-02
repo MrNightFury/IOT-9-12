@@ -25,7 +25,7 @@ let pubTopics: MositTopic[] = [
 ]
 
 let config = { // Вписать чемодан
-    host: "192.168.1.13",
+    host: "192.168.1.12",
 }
 
 let publisher: Publisher = new Publisher("mqtt://thingsboard.mosit");
