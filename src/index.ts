@@ -42,6 +42,6 @@ publisher.setup(pubTopics);
 
 subscribe(config, subTopics, (topic: string, message: string) => {
     console.log(`Recieved ${topic}: ${message}`);
-    console.log(`Publishing ${getPubTopic(topic).name}(${getPubTopic(topic).user}): ${message}`);
+    console.log(`Publishing ${getPubTopic(topic).name}(${getPubTopic(topic).user}): {${getPubTopic(topic).key}:${message}}`);
     publisher.publish(getPubTopic(topic).name, message);
 })
