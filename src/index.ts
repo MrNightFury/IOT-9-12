@@ -14,13 +14,13 @@ function getPubTopic(subTopic: string) : MositTopic | any {
 let resend: Resend[] = [
     {
         from: new Topic("wb-msw-v3_21", "Sound Level"),
-        to: new MositTopic("sound", "nhmy5k7zusy872wa3rq1", "sound_level")
+        to: new MositTopic("sound", "rrs42oixlsbylekbqu77", "sound_level")
     }, {
         from: new Topic("wb-ms_11", "Illuminance"),
-        to: new MositTopic("light", "", "illuminance")
+        to: new MositTopic("light", "6syfkxwmlba0kj7yrejx", "illuminance")
     }, {
         from: new Topic("wb-adc", "Vin"),
-        to: new MositTopic("voltage", "", "Vin")
+        to: new MositTopic("voltage", "ankuxhzc160kv0xbzkm0", "Vin")
     }
 ]
 
