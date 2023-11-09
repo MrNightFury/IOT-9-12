@@ -25,7 +25,7 @@ let resend: Resend[] = [
 ]
 
 let config = { // Вписать чемодан
-    host: "192.168.1.12",
+    host: "192.168.1.13",
 }
 
 console.log("Connecting...");
