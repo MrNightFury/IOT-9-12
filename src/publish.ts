@@ -8,7 +8,6 @@ export interface Pub {
 
 export class Publisher {
     host: string;
-    // connections: Map<string, mqtt.MqttClient> = new Map();
     connections: Map<string, Pub> = new Map();
 
     constructor(host: string) {

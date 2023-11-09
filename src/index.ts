@@ -1,7 +1,6 @@
 import { subscribe } from "./subscribe.js";
 import { Publisher } from "./publish.js";
-import { Resend } from "./ReSend.js";
-import { MositTopic, Topic } from "./ReSend.js";
+import { MositTopic, Topic, Resend } from "./ReSend.js";
 
 function getPubTopic(subTopic: string) : MositTopic | any {
     for (let i in resend) {
