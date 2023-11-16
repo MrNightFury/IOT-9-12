@@ -12,6 +12,14 @@ function getPubTopic(subTopic: string) : MositTopic | any {
     return {}
 }
 
+function ifOne(message: string, text: string) {
+    if (message == "0") {
+        return "";
+    } else {
+        return text;
+    }
+}
+
 let resend: Resend[] = [
     // {
     //     from: new Topic("wb-msw-v3_21", "Sound Level"),
@@ -31,10 +39,17 @@ let resend: Resend[] = [
     }, {
         from: new Topic("wb-gpio", "MOD1_IN1"),
         to: new MositTopic("K1", "awndnsr5tkrg9jqlw8e6", "K1", (name, message) => {
-            if (message == "0") {
-                return "";
-            }
-            return `name: ${name}`;
+            return ifOne(message, "{buttonName: \"OnOff\"}");
+        })
+    }, {
+        from: new Topic("wb-gpio", "MOD1_IN2"),
+        to: new MositTopic("K2", "awndnsr5tkrg9jqlw8e6", "K2", (name, message) => {
+            return ifOne(message, "{buttonName: \"FreqUp\"}");
+        })
+    }, {
+        from: new Topic("wb-gpio", "MOD1_IN3"),
+        to: new MositTopic("K3", "awndnsr5tkrg9jqlw8e6", "K3", (name, message) => {
+            return ifOne(message, "{buttonName: \"FreqDown\"}");
         })
     }
 ]
