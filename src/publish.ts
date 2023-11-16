@@ -38,7 +38,16 @@ export class Publisher {
 
     publish(name: string, message: string) {
         let con = this.connections.get(name);
-        let messageToSend = `{${con?.topic.key}: ${message}}`;
+        let messageToSend;
+        if (con?.topic.messageConstructor) {
+            messageToSend = con.topic.messageConstructor(name, message);
+            if (messageToSend == "") {
+                return;
+            }
+        } else {
+            messageToSend = `{${con?.topic.key}: ${message}}`;
+        }
+        
         console.log(`Publishing to ${con?.topic.name}(${con?.topic.user}): ${messageToSend}`);
         con?.client.publish("v1/devices/me/telemetry", messageToSend);
     }

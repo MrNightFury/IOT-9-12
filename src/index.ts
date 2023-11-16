@@ -12,21 +12,29 @@ function getPubTopic(subTopic: string) : MositTopic | any {
 }
 
 let resend: Resend[] = [
-    {
-        from: new Topic("wb-msw-v3_21", "Sound Level"),
-        to: new MositTopic("sound", "rrs42oixlsbylekbqu77", "sound_level")
-    }, {
-        from: new Topic("wb-ms_11", "Illuminance"),
-        to: new MositTopic("light", "6syfkxwmlba0kj7yrejx", "illuminance")
-    }, {
-        from: new Topic("wb-adc", "Vin"),
-        to: new MositTopic("voltage", "ankuxhzc160kv0xbzkm0", "Vin")
-    },
+    // {
+    //     from: new Topic("wb-msw-v3_21", "Sound Level"),
+    //     to: new MositTopic("sound", "rrs42oixlsbylekbqu77", "sound_level")
+    // }, {
+    //     from: new Topic("wb-ms_11", "Illuminance"),
+    //     to: new MositTopic("light", "6syfkxwmlba0kj7yrejx", "illuminance")
+    // }, {
+    //     from: new Topic("wb-adc", "Vin"),
+    //     to: new MositTopic("voltage", "ankuxhzc160kv0xbzkm0", "Vin")
+    // },
 
 
     {
         from: new Topic("wb-msw-v3_21", "CO2"),
         to: new MositTopic("CO2", "jpndq5ev40j6o22p4lx3", "CO2")
+    }, {
+        from: new Topic("wb-mr3_56", "K1"),
+        to: new MositTopic("K1", "awndnsr5tkrg9jqlw8e6", "K1", (name, message) => {
+            if (message == "0") {
+                return "";
+            }
+            return `name: ${name}`;
+        })
     }
 ]
 

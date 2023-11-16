@@ -19,10 +19,12 @@ export class MositTopic {
     user: string;
     key: string;
     name: string;
+    messageConstructor?: Function;
 
-    constructor(name: string, user: string, key: string) {
+    constructor(name: string, user: string, key: string, messageConstructor?: (name: string, message: string) => void) {
         this.key = key;
         this.user = user;
         this.name = name;
+        this.messageConstructor = messageConstructor;
     }
 }
