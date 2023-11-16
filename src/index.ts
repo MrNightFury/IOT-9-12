@@ -21,6 +21,12 @@ let resend: Resend[] = [
     }, {
         from: new Topic("wb-adc", "Vin"),
         to: new MositTopic("voltage", "ankuxhzc160kv0xbzkm0", "Vin")
+    },
+
+
+    {
+        from: new Topic("wb-msw-v3_21", "CO2"),
+        to: new MositTopic("CO2", "jpndq5ev40j6o22p4lx3", "CO2")
     }
 ]
 
