@@ -1,6 +1,7 @@
 import { subscribe } from "./subscribe.js";
 import { Publisher } from "./publish.js";
 import { MositTopic, Topic, Resend } from "./ReSend.js";
+import { RPCHandler, RPCSource, RPCTopic } from "./rpc.js";
 
 function getPubTopic(subTopic: string) : MositTopic | any {
     for (let i in resend) {
@@ -51,3 +52,9 @@ subscribe(config, resend.map(item => item.from), (topic: string, message: string
     console.log(`Recieved ${topic}: ${message}`);
     publisher.publish(getPubTopic(topic).name, message);
 })
+
+let rpc: RPCTopic[] = [
+    {
+        source: new RPCSource("jpndq5ev40j6o22p4lx3")
+    }
+]
