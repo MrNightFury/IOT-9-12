@@ -29,7 +29,7 @@ let resend: Resend[] = [
         from: new Topic("wb-msw-v3_21", "CO2"),
         to: new MositTopic("CO2", "jpndq5ev40j6o22p4lx3", "CO2")
     }, {
-        from: new Topic("wb-mr3_56", "K1"),
+        from: new Topic("wb-gpio", "MOD1_IN1"),
         to: new MositTopic("K1", "awndnsr5tkrg9jqlw8e6", "K1", (name, message) => {
             if (message == "0") {
                 return "";
