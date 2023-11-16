@@ -73,3 +73,5 @@ let rpc: RPCTopic[] = [
         source: new RPCSource("jpndq5ev40j6o22p4lx3")
     }
 ]
+let handler = new RPCHandler("thingsboard.mosit");
+handler.setup(rpc);
