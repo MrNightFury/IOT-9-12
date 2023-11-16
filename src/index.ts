@@ -2,6 +2,7 @@ import { subscribe } from "./subscribe.js";
 import { Publisher } from "./publish.js";
 import { MositTopic, Topic, Resend } from "./ReSend.js";
 import { RPCHandler, RPCSource, RPCTopic } from "./rpc.js";
+import * as mqtt from "mqtt";
 
 function getPubTopic(subTopic: string) : MositTopic | any {
     for (let i in resend) {
@@ -70,7 +71,10 @@ subscribe(config, resend.map(item => item.from), (topic: string, message: string
 
 let rpc: RPCTopic[] = [
     {
-        source: new RPCSource("jpndq5ev40j6o22p4lx3")
+        source: new RPCSource("jpndq5ev40j6o22p4lx3"),
+        handler: (name, message) => {
+            
+        }
     }
 ]
 let handler = new RPCHandler("thingsboard.mosit");

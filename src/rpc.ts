@@ -9,6 +9,7 @@ export class RPCSource {
 
 export interface RPCTopic {
     source: RPCSource;
+    handler: (topic: string, message: string) => void
 }
 
 export class RPCHandler {
@@ -20,11 +21,11 @@ export class RPCHandler {
     }
 
     async setup(topics: RPCTopic[]) {
-        for (let topic of topics) {
+        for (let t of topics) {
             let client = await mqtt.connectAsync({
                 host: this.host,
                 protocol: "mqtt",
-                username: topic.source.user
+                username: t.source.user
             }).catch(err => {
                 console.log(`!!${err}!!`);
             }).then(res => {
@@ -36,13 +37,18 @@ export class RPCHandler {
 
             client.subscribe("v1/devices/me/rpc/request/+", err => {
                 if (!err) {
-                    console.log("Subscribed to " + topic.source.user);
+                    console.log("Subscribed to " + t.source.user);
                 } else {
                     console.log(err);
                 }
             });
             client.on("message", (topic, message) => {
-                console.log(`Message on ${topic.replace("v1/devices/me/rpc/request/", "")}: ${message}`);
+                let requestId = topic.replace("v1/devices/me/rpc/request/", "");
+                console.log(`Message on ${requestId}: ${message}`);
+                t.handler(topic.replace("v1/devices/me/rpc/request/", ""), message.toString());
+                if (client) {
+                    client.publish("v1/devices/me/rpc/response/" + requestId, "1");
+                }
             })
         }
     }
