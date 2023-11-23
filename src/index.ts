@@ -96,7 +96,7 @@ let rpc: RPCTopic[] = [
                 connection.publish(top, mes);
             }
             if (message.method == "setFrequency") {
-                let mes = message.params.frequency;
+                let mes = "" + message.params.frequency;
                 let top = new Topic("buzzer", "frequency").getPath(); // enabled | frequency
                 connection.publish(top, mes);
             }
