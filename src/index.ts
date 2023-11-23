@@ -75,8 +75,9 @@ let rpc: RPCTopic[] = [
         handler: (connection, rpc, topic, message) => {
             if (message.method == "setVentState") {
                 let mes = +message.params.state + "";
-                console.log("Parsed mes: " + mes);
-                connection.publish(new Topic("wb-mr3_56", "K2").getPath(), mes)
+                let top = new Topic("wb-mr3_56", "K2").getPath();
+                console.log("[MQTT Sub] " + top + " : " + mes);
+                connection.publish(top, mes)
                 rpc(mes);
             }
             console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
