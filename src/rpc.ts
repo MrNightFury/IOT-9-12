@@ -25,7 +25,7 @@ export class RPCHandler {
     constructor(host: string, config: any) {
         this.host = host;
         this.chemodan = config.host;
-        this.connection = mqtt.connect(this.chemodan);
+        this.connection = mqtt.connect("mqtt://" + this.chemodan);
     }
 
     async setup(topics: RPCTopic[]) {
