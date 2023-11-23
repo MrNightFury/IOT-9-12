@@ -65,20 +65,25 @@ await publisher.setup(resend.map(item => item.to));
 
 console.log("Subscribing...");
 subscribe(config, resend.map(item => item.from), (topic: string, message: string) => {
-    console.log(`Recieved ${topic}: ${message}`);
+    console.log(`[MQTT Handler] Recieved ${topic}: ${message}`);
     publisher.publish(getPubTopic(topic).name, message);
 })
 
 let rpc: RPCTopic[] = [
     {
         source: new RPCSource("jpndq5ev40j6o22p4lx3"), // Виртуальный CO2 & вентилятор
-        handler: (topic, message) => {
-            console.log(topic + " : " + JSON.stringify(message))
+        handler: (connection, rpc, topic, message) => {
+            if (message.method == "setVentState") {
+                connection.publish(new Topic("wb-mr3_56", "K2").getPath(), message.params.state)
+                rpc(message.params.state);
+            }
+            console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
         }
     }, {
         source: new RPCSource("awndnsr5tkrg9jqlw8e6"), // Виртуальный баззер с управлением
-        handler: (topic, message) => {
-            console.log(topic + " : " + JSON.stringify(message))
+        handler: (connection, rpc, topic, message) => {
+            if (message.method == "")
+            console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
         }
     }
 ]

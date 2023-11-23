@@ -9,7 +9,7 @@ export class RPCSource {
 
 export interface RPCTopic {
     source: RPCSource;
-    handler: (topic: string, message: RPCMessage) => void
+    handler: (onnection: mqtt.MqttClient, sender: (message: string)=>void, topic: string, message: RPCMessage) => void
 }
 
 export interface RPCMessage {
@@ -20,10 +20,12 @@ export interface RPCMessage {
 export class RPCHandler {
     host: string;
     chemodan: string;
+    connection: mqtt.MqttClient;
 
     constructor(host: string, config: any) {
         this.host = host;
         this.chemodan = config.host;
+        this.connection = mqtt.connect(this.chemodan);
     }
 
     async setup(topics: RPCTopic[]) {
@@ -52,10 +54,11 @@ export class RPCHandler {
                 let requestId = topic.replace("v1/devices/me/rpc/request/", "");
                 console.log(`Message on ${requestId}: ${message}`);
                 let messageInJSON = JSON.parse(message.toString()) as RPCMessage;
-                t.handler(requestId, messageInJSON);
-                if (client) {
-                    client.publish("v1/devices/me/rpc/response/" + requestId, "1");
-                }
+                t.handler(this.connection, (message: string) => {
+                    if (client) {
+                        client.publish("v1/devices/me/rpc/response/" + requestId, message);
+                    }
+                }, requestId, messageInJSON);
             })
         }
     }
