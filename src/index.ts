@@ -86,10 +86,17 @@ let rpc: RPCTopic[] = [
         source: new RPCSource("awndnsr5tkrg9jqlw8e6"), // Виртуальный баззер с управлением
         handler: (connection, rpc, topic, message) => {
             if (message.method == "turnBuzzerOn") {
-                
-                rpc("1")
+                let mes = "1";
+                let top = new Topic("buzzer", "enabled").getPath() + "/on"; // enabled | frequency
+                connection.publish(top, mes);
+            }
+            if (message.method == "turnBuzzerOff") {
+                let mes = "0";
+                let top = new Topic("buzzer", "enabled").getPath() + "/on"; // enabled | frequency
+                connection.publish(top, mes);
             }
             console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
+            rpc("1")
         }
     }
 ]
