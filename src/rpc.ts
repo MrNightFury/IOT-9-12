@@ -9,7 +9,12 @@ export class RPCSource {
 
 export interface RPCTopic {
     source: RPCSource;
-    handler: (topic: string, message: string) => void
+    handler: (topic: string, message: RPCMessage) => void
+}
+
+export interface RPCMessage {
+    method: string;
+    params: any;
 }
 
 export class RPCHandler {
@@ -46,7 +51,8 @@ export class RPCHandler {
             client.on("message", (topic, message) => {
                 let requestId = topic.replace("v1/devices/me/rpc/request/", "");
                 console.log(`Message on ${requestId}: ${message}`);
-                t.handler(requestId, message.toString());
+                let messageInJSON = JSON.parse(message.toString()) as RPCMessage;
+                t.handler(requestId, messageInJSON);
                 if (client) {
                     client.publish("v1/devices/me/rpc/response/" + requestId, "1");
                 }

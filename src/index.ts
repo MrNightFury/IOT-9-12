@@ -73,12 +73,12 @@ let rpc: RPCTopic[] = [
     {
         source: new RPCSource("jpndq5ev40j6o22p4lx3"), // Виртуальный CO2 & вентилятор
         handler: (topic, message) => {
-            console.log(topic + " : " + message)
+            console.log(topic + " : " + JSON.stringify(message))
         }
     }, {
         source: new RPCSource("awndnsr5tkrg9jqlw8e6"), // Виртуальный баззер с управлением
         handler: (topic, message) => {
-            console.log(topic + " : " + message)
+            console.log(topic + " : " + JSON.stringify(message))
         }
     }
 ]
