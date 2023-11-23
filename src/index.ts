@@ -95,6 +95,11 @@ let rpc: RPCTopic[] = [
                 let top = new Topic("buzzer", "enabled").getPath() + "/on"; // enabled | frequency
                 connection.publish(top, mes);
             }
+            if (message.method == "turnBuzzerOff") {
+                let mes = message.params.frequency;
+                let top = new Topic("buzzer", "frequency").getPath(); // enabled | frequency
+                connection.publish(top, mes);
+            }
             console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
             rpc("1")
         }
