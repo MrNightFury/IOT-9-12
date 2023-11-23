@@ -55,7 +55,7 @@ let resend: Resend[] = [
     }
 ]
 
-let config = { // Вписать чемодан
+let config = {
     host: "192.168.1.13",
 }
 
@@ -71,11 +71,16 @@ subscribe(config, resend.map(item => item.from), (topic: string, message: string
 
 let rpc: RPCTopic[] = [
     {
-        source: new RPCSource("jpndq5ev40j6o22p4lx3"),
-        handler: (name, message) => {
-            
+        source: new RPCSource("jpndq5ev40j6o22p4lx3"), // Виртуальный CO2 & вентилятор
+        handler: (topic, message) => {
+            console.log(topic + " : " + message)
+        }
+    }, {
+        source: new RPCSource("awndnsr5tkrg9jqlw8e6"), // Виртуальный баззер с управлением
+        handler: (topic, message) => {
+            console.log(topic + " : " + message)
         }
     }
 ]
-let handler = new RPCHandler("thingsboard.mosit");
+let handler = new RPCHandler("thingsboard.mosit", config);
 handler.setup(rpc);

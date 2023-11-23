@@ -14,10 +14,11 @@ export interface RPCTopic {
 
 export class RPCHandler {
     host: string;
+    chemodan: string;
 
-
-    constructor(host: string) {
+    constructor(host: string, config: any) {
         this.host = host;
+        this.chemodan = config.host;
     }
 
     async setup(topics: RPCTopic[]) {
@@ -45,7 +46,7 @@ export class RPCHandler {
             client.on("message", (topic, message) => {
                 let requestId = topic.replace("v1/devices/me/rpc/request/", "");
                 console.log(`Message on ${requestId}: ${message}`);
-                t.handler(topic.replace("v1/devices/me/rpc/request/", ""), message.toString());
+                t.handler(requestId, message.toString());
                 if (client) {
                     client.publish("v1/devices/me/rpc/response/" + requestId, "1");
                 }
