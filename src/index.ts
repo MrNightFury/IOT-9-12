@@ -74,7 +74,7 @@ let rpc: RPCTopic[] = [
         source: new RPCSource("jpndq5ev40j6o22p4lx3"), // Виртуальный CO2 & вентилятор
         handler: (connection, rpc, topic, message) => {
             if (message.method == "setVentState") {
-                let mes = message.params.state + "";
+                let mes = +message.params.state + "";
                 let top = new Topic("wb-mr3_56", "K2").getPath() + "/on";
                 console.log("[MQTT Sub] " + top + " : " + mes);
                 connection.publish(top, mes)
