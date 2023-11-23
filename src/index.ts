@@ -74,7 +74,7 @@ let rpc: RPCTopic[] = [
         source: new RPCSource("jpndq5ev40j6o22p4lx3"), // Виртуальный CO2 & вентилятор
         handler: (connection, rpc, topic, message) => {
             if (message.method == "setVentState") {
-                let mes = +message.params.state + "";
+                let mes = message.params.state + "";
                 let top = new Topic("wb-mr3_56", "K2").getPath();
                 console.log("[MQTT Sub] " + top + " : " + mes);
                 connection.publish(top, mes)
@@ -85,7 +85,10 @@ let rpc: RPCTopic[] = [
     }, {
         source: new RPCSource("awndnsr5tkrg9jqlw8e6"), // Виртуальный баззер с управлением
         handler: (connection, rpc, topic, message) => {
-            if (message.method == "")
+            if (message.method == "turnBuzzerOn") {
+                
+                rpc("1")
+            }
             console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
         }
     }
