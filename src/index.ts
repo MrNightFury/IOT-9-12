@@ -101,7 +101,7 @@ let rpc: RPCTopic[] = [
                 let mes = "" + message.params.frequency;
                 let top = new Topic("buzzer", "frequency").getPath();
                 connection.publish(top, mes);
-                rpc(JSON.stringify({"actualFrequency": message.params.frequency}))
+                rpc(JSON.stringify({"actual_frequency": message.params.frequency}))
             }
             console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
             rpc("1")
