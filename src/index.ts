@@ -73,7 +73,7 @@ await publisher.setup(resend.map(item => item.to));
 
 console.log("Subscribing...");
 subscribe(config, resend.map(item => item.from), (topic: string, message: string) => {
-    console.log(`[MQTT Handler] Recieved ${topic}: ${message}`);
+    // console.log(`[MQTT Handler] Recieved ${topic}: ${message}`);
     publisher.publish(getPubTopic(topic).name, message);
 })
 

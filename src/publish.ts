@@ -48,7 +48,7 @@ export class Publisher {
             messageToSend = `{${con?.topic.key}: ${message}}`;
         }
         
-        console.log(`Publishing to ${con?.topic.name}(${con?.topic.user}): ${messageToSend}`);
+        // console.log(`Publishing to ${con?.topic.name}(${con?.topic.user}): ${messageToSend}`);
         con?.client.publish("v1/devices/me/telemetry", messageToSend);
     }
 }
