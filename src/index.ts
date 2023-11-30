@@ -22,7 +22,7 @@ function ifOne(message: string, text: string) {
 }
 
 function format(name: string, state: string) {
-    return `{buttonName: "${name}, isOn: ${state}"}`
+    return `{buttonName: "${name}", isOn: "${state}"}`
 }
 
 let resend: Resend[] = [
