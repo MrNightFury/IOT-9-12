@@ -15,7 +15,7 @@ function getPubTopic(subTopic: string) : MositTopic | any {
 
 function ifOne(message: string, text: string) {
     if (message == "0") {
-        return "";
+        return "{buttonName: '0'}";
     } else {
         return text;
     }
