@@ -105,6 +105,9 @@ let rpc: RPCTopic[] = [
                 connection.publish(top, mes);
                 rpc(JSON.stringify({"actual_frequency": message.params.frequency}))
             }
+            if (message.method == "m") {
+                rpc("1")
+            }
             console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
             rpc("1")
         }
