@@ -90,7 +90,7 @@ let rpc: RPCTopic[] = [
                 let mes = "1";
                 let top = new Topic("buzzer", "enabled").getPath() + "/on";
                 connection.publish(top, mes);
-                rpc(JSON.stringify({"actual_isBuzzerOn": "false"}))
+                rpc(JSON.stringify({"actual_isBuzzerOn": "true"}))
             }
             if (message.method == "turnBuzzerOff") {
                 let mes = "0";
