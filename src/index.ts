@@ -41,7 +41,7 @@ let resend: Resend[] = [
         from: new Topic("wb-gpio", "MOD1_IN1"),
         to: new MositTopic("K1", "awndnsr5tkrg9jqlw8e6", "K1", (name, message) => {
             // return ifOne(message, "{buttonName: \"OnOff\"}");
-            return ifOne(message, "");
+            return ifOne(message, "{buttonName: \"Shit\"}");
         })
     }, {
         from: new Topic("wb-gpio", "MOD1_IN2"),
