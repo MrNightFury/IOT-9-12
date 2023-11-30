@@ -83,22 +83,25 @@ let rpc: RPCTopic[] = [
             console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
         }
     }, {
-        source: new RPCSource("awndnsr5tkrg9jqlw8e6"), // Виртуальный баззер с управлением
+        source: new RPCSource("awndnsr5tkrg9jqlw8e6"),
         handler: (connection, rpc, topic, message) => {
             if (message.method == "turnBuzzerOn") {
                 let mes = "1";
-                let top = new Topic("buzzer", "enabled").getPath() + "/on"; // enabled | frequency
+                let top = new Topic("buzzer", "enabled").getPath() + "/on";
                 connection.publish(top, mes);
+                rpc(JSON.stringify({"actual_idBuzzerOn": true}))
             }
             if (message.method == "turnBuzzerOff") {
                 let mes = "0";
-                let top = new Topic("buzzer", "enabled").getPath() + "/on"; // enabled | frequency
+                let top = new Topic("buzzer", "enabled").getPath() + "/on";
                 connection.publish(top, mes);
+                rpc(JSON.stringify({"actual_idBuzzerOn": false}))
             }
             if (message.method == "setFrequency") {
                 let mes = "" + message.params.frequency;
-                let top = new Topic("buzzer", "frequency").getPath(); // enabled | frequency
+                let top = new Topic("buzzer", "frequency").getPath();
                 connection.publish(top, mes);
+                rpc(JSON.stringify({"actualFrequency": message.params.frequency}))
             }
             console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
             rpc("1")
