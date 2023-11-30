@@ -97,7 +97,7 @@ let rpc: RPCTopic[] = [
                 let mes = message.params.isBuzzerOn + "";
                 console.log(mes);
                 let top = new Topic("buzzer", "enabled").getPath() + "/on";
-                connection.publish(top, mes);
+                connection.publish(top, mes == "true" ? "1" : "0");
                 rpc(JSON.stringify({"actual_isBuzzerOn": mes}))
             }
             if (message.method == "setFrequency") {
