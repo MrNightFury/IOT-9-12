@@ -78,7 +78,7 @@ let rpc: RPCTopic[] = [
                 let top = new Topic("wb-mr3_56", "K2").getPath() + "/on";
                 console.log("[MQTT Sub] " + top + " : " + mes);
                 connection.publish(top, mes)
-                rpc(mes);
+                rpc(JSON.stringify({state: mes}));
             }
             console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
         }
