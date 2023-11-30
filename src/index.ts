@@ -21,6 +21,10 @@ function ifOne(message: string, text: string) {
     }
 }
 
+function format(name: string, state: string) {
+    return `{buttonName: "${name}, isOn: ${state}"`
+}
+
 let resend: Resend[] = [
     {
         from: new Topic("wb-msw-v3_21", "Sound Level"),
@@ -40,18 +44,21 @@ let resend: Resend[] = [
     }, {
         from: new Topic("wb-gpio", "MOD1_IN1"),
         to: new MositTopic("K1", "awndnsr5tkrg9jqlw8e6", "K1", (name, message) => {
-            return ifOne(message, "{buttonName: \"OnOff\"}");
+            // return ifOne(message, "{buttonName: \"OnOff\"}");
+            return format("OnOff", message)
             // return ifOne(message, "{buttonName: \"Shit\"}");
         })
     }, {
         from: new Topic("wb-gpio", "MOD1_IN2"),
         to: new MositTopic("K2", "awndnsr5tkrg9jqlw8e6", "K2", (name, message) => {
-            return ifOne(message, "{buttonName: \"FreqUp\"}");
+            return format("FreqUp", message)
+            // return ifOne(message, "{buttonName: \"FreqUp\"}");
         })
     }, {
         from: new Topic("wb-gpio", "MOD1_IN3"),
         to: new MositTopic("K3", "awndnsr5tkrg9jqlw8e6", "K3", (name, message) => {
-            return ifOne(message, "{buttonName: \"FreqDown\"}");
+            return format("FreqDown", message)
+            // return ifOne(message, "{buttonName: \"FreqDown\"}");
         })
     }
 ]
