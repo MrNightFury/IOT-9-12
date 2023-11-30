@@ -94,7 +94,7 @@ let rpc: RPCTopic[] = [
         source: new RPCSource("awndnsr5tkrg9jqlw8e6"),
         handler: (connection, rpc, topic, message) => {
             if (message.method == "turnBuzzerOnOff") {
-                let mes = message.params.isBuzzerOn;
+                let mes = message.params.isBuzzerOn + "";
                 let top = new Topic("buzzer", "enabled").getPath() + "/on";
                 connection.publish(top, mes);
                 rpc(JSON.stringify({"actual_isBuzzerOn": mes}))
