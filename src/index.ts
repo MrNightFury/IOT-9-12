@@ -93,17 +93,11 @@ let rpc: RPCTopic[] = [
     }, {
         source: new RPCSource("awndnsr5tkrg9jqlw8e6"),
         handler: (connection, rpc, topic, message) => {
-            if (message.method == "turnBuzzerOn") {
-                let mes = "1";
+            if (message.method == "turnBuzzerOnOff") {
+                let mes = message.params.isBuzzerOn;
                 let top = new Topic("buzzer", "enabled").getPath() + "/on";
                 connection.publish(top, mes);
-                rpc(JSON.stringify({"actual_isBuzzerOn": "true"}))
-            }
-            if (message.method == "turnBuzzerOff") {
-                let mes = "0";
-                let top = new Topic("buzzer", "enabled").getPath() + "/on";
-                connection.publish(top, mes);
-                rpc(JSON.stringify({"actual_isBuzzerOn": "false"}))
+                rpc(JSON.stringify({"actual_isBuzzerOn": mes}))
             }
             if (message.method == "setFrequency") {
                 let mes = "" + message.params.frequency;
