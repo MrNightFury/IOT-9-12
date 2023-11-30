@@ -34,26 +34,26 @@ let resend: Resend[] = [
     },
 
 
-    // {
-    //     from: new Topic("wb-msw-v3_21", "CO2"),
-    //     to: new MositTopic("CO2", "jpndq5ev40j6o22p4lx3", "CO2")
-    // }, {
-    //     from: new Topic("wb-gpio", "MOD1_IN1"),
-    //     to: new MositTopic("K1", "awndnsr5tkrg9jqlw8e6", "K1", (name, message) => {
-    //         return ifOne(message, "{buttonName: \"OnOff\"}");
-    //         // return ifOne(message, "{buttonName: \"Shit\"}");
-    //     })
-    // }, {
-    //     from: new Topic("wb-gpio", "MOD1_IN2"),
-    //     to: new MositTopic("K2", "awndnsr5tkrg9jqlw8e6", "K2", (name, message) => {
-    //         return ifOne(message, "{buttonName: \"FreqUp\"}");
-    //     })
-    // }, {
-    //     from: new Topic("wb-gpio", "MOD1_IN3"),
-    //     to: new MositTopic("K3", "awndnsr5tkrg9jqlw8e6", "K3", (name, message) => {
-    //         return ifOne(message, "{buttonName: \"FreqDown\"}");
-    //     })
-    // }
+    {
+        from: new Topic("wb-msw-v3_21", "CO2"),
+        to: new MositTopic("CO2", "jpndq5ev40j6o22p4lx3", "CO2")
+    }, {
+        from: new Topic("wb-gpio", "MOD1_IN1"),
+        to: new MositTopic("K1", "awndnsr5tkrg9jqlw8e6", "K1", (name, message) => {
+            return ifOne(message, "{buttonName: \"OnOff\"}");
+            // return ifOne(message, "{buttonName: \"Shit\"}");
+        })
+    }, {
+        from: new Topic("wb-gpio", "MOD1_IN2"),
+        to: new MositTopic("K2", "awndnsr5tkrg9jqlw8e6", "K2", (name, message) => {
+            return ifOne(message, "{buttonName: \"FreqUp\"}");
+        })
+    }, {
+        from: new Topic("wb-gpio", "MOD1_IN3"),
+        to: new MositTopic("K3", "awndnsr5tkrg9jqlw8e6", "K3", (name, message) => {
+            return ifOne(message, "{buttonName: \"FreqDown\"}");
+        })
+    }
 ]
 
 let config = {
@@ -70,44 +70,44 @@ subscribe(config, resend.map(item => item.from), (topic: string, message: string
     publisher.publish(getPubTopic(topic).name, message);
 })
 
-// let rpc: RPCTopic[] = [
-//     {
-//         source: new RPCSource("jpndq5ev40j6o22p4lx3"), // Виртуальный CO2 & вентилятор
-//         handler: (connection, rpc, topic, message) => {
-//             if (message.method == "setVentState") {
-//                 let mes = +message.params.state + "";
-//                 let top = new Topic("wb-mr3_56", "K2").getPath() + "/on";
-//                 console.log("[MQTT Sub] " + top + " : " + mes);
-//                 connection.publish(top, mes)
-//                 rpc(JSON.stringify({state: !!mes}));
-//             }
-//             console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
-//         }
-//     }, {
-//         source: new RPCSource("awndnsr5tkrg9jqlw8e6"),
-//         handler: (connection, rpc, topic, message) => {
-//             if (message.method == "turnBuzzerOn") {
-//                 let mes = "1";
-//                 let top = new Topic("buzzer", "enabled").getPath() + "/on";
-//                 connection.publish(top, mes);
-//                 rpc(JSON.stringify({"actual_isBuzzerOn": "true"}))
-//             }
-//             if (message.method == "turnBuzzerOff") {
-//                 let mes = "0";
-//                 let top = new Topic("buzzer", "enabled").getPath() + "/on";
-//                 connection.publish(top, mes);
-//                 rpc(JSON.stringify({"actual_isBuzzerOn": "false"}))
-//             }
-//             if (message.method == "setFrequency") {
-//                 let mes = "" + message.params.frequency;
-//                 let top = new Topic("buzzer", "frequency").getPath();
-//                 connection.publish(top, mes);
-//                 rpc(JSON.stringify({"actual_frequency": message.params.frequency}))
-//             }
-//             console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
-//             rpc("1")
-//         }
-//     }
-// ]
-// let handler = new RPCHandler("thingsboard.mosit", config);
-// handler.setup(rpc);
+let rpc: RPCTopic[] = [
+    {
+        source: new RPCSource("jpndq5ev40j6o22p4lx3"), // Виртуальный CO2 & вентилятор
+        handler: (connection, rpc, topic, message) => {
+            if (message.method == "setVentState") {
+                let mes = +message.params.state + "";
+                let top = new Topic("wb-mr3_56", "K2").getPath() + "/on";
+                console.log("[MQTT Sub] " + top + " : " + mes);
+                connection.publish(top, mes)
+                rpc(JSON.stringify({state: !!mes}));
+            }
+            console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
+        }
+    }, {
+        source: new RPCSource("awndnsr5tkrg9jqlw8e6"),
+        handler: (connection, rpc, topic, message) => {
+            if (message.method == "turnBuzzerOn") {
+                let mes = "1";
+                let top = new Topic("buzzer", "enabled").getPath() + "/on";
+                connection.publish(top, mes);
+                rpc(JSON.stringify({"actual_isBuzzerOn": "true"}))
+            }
+            if (message.method == "turnBuzzerOff") {
+                let mes = "0";
+                let top = new Topic("buzzer", "enabled").getPath() + "/on";
+                connection.publish(top, mes);
+                rpc(JSON.stringify({"actual_isBuzzerOn": "false"}))
+            }
+            if (message.method == "setFrequency") {
+                let mes = "" + message.params.frequency;
+                let top = new Topic("buzzer", "frequency").getPath();
+                connection.publish(top, mes);
+                rpc(JSON.stringify({"actual_frequency": message.params.frequency}))
+            }
+            console.log("[RPC Handler]" + topic + " : " + JSON.stringify(message))
+            rpc("1")
+        }
+    }
+]
+let handler = new RPCHandler("thingsboard.mosit", config);
+handler.setup(rpc);
